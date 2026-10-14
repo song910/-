@@ -2,7 +2,19 @@
 import logging
 
 import pandas as pd
-import yfinance as yf
+# yfinance 采用延迟导入，避免模块加载时因云端环境缺包而报错
+try:
+    import yfinance as yf
+except ImportError:
+    yf = None
+
+def _get_yf():
+    """懒加载 yfinance。首次调用时才会真正 import。"""
+    global yf
+    if yf is None:
+        import yfinance as _yf
+        yf = _yf
+    return yf
 from yfinance.exceptions import YFRateLimitError
 from stockstats import wrap
 from typing import Annotated
@@ -74,7 +86,7 @@ def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
     if os.path.exists(data_file):
         data = pd.read_csv(data_file, on_bad_lines="skip", encoding="utf-8")
     else:
-        data = yf_retry(lambda: yf.download(
+        data = yf_retry(lambda: _get_yf().download(
             symbol,
             start=start_str,
             end=end_str,
