@@ -21,6 +21,52 @@ if str(_PROJECT_ROOT) not in sys.path:
 # override=True：让 .env 的值优先于进程里可能残留的空/旧环境变量
 load_dotenv(_PROJECT_ROOT / ".env", override=True)
 
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 密码保护
+# ═══════════════════════════════════════════════════════════════════════════
+_PASSWORD = st.secrets.get("APP_PASSWORD", "")
+
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+if not st.session_state["authenticated"]:
+    st.set_page_config(page_title="请登录", page_icon="🔒", layout="centered")
+    st.markdown(
+        """
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            text-align: center;
+        ">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+            <div style="font-size: 1.8rem; font-weight: 700; color: #ff5a1f; margin-bottom: 0.5rem;">
+                私有访问
+            </div>
+            <div style="color: #888; font-size: 1rem; max-width: 400px; line-height: 1.6;">
+                本工具仅供个人使用，请输入访问密码。
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    _pwd_input = st.text_input("访问密码", type="password", key="password_input")
+    if st.button("进入", type="primary", use_container_width=True):
+        if _pwd_input == _PASSWORD:
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            st.error("密码错误，请重试。")
+    st.stop()
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 以下为登录后正常显示的内容
+# ═══════════════════════════════════════════════════════════════════════════
+
 from tradingagents.default_config import DEFAULT_CONFIG  # noqa: E402
 from components.progress_panel import render_progress  # noqa: E402
 from components.report_viewer import render_report  # noqa: E402
