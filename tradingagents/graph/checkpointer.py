@@ -11,36 +11,17 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator
 
-# ── langgraph-checkpoint-sqlite 兜底：缺包时用占位类，避免模块加载即崩 ──
+# ── langgraph-checkpoint-sqlite 兜底 ──
+# 优先使用官方的 SqliteSaver；如果云端缺少该包，则退回使用 LangGraph 官方的
+# InMemorySaver。InMemorySaver 同样继承自 BaseCheckpointSaver，能通过
+# LangGraph 编译时的类型校验，只是重启后不保留检查点。
 try:
     from langgraph.checkpoint.sqlite import SqliteSaver
+    _USING_SQLITE = True
 except ImportError:
-    class SqliteSaver:
-        """langgraph-checkpoint-sqlite 未安装时的占位类。
-
-        仅提供与真实 SqliteSaver 相同签名的方法名，保证代码不会 AttributeError。
-        """
-        def __init__(self, *args, **kwargs):
-            pass
-
-        @classmethod
-        def from_conn_string(cls, *args, **kwargs):
-            return cls()
-
-        def setup(self, *args, **kwargs):
-            return None
-
-        def put(self, *args, **kwargs):
-            return None
-
-        def get(self, *args, **kwargs):
-            return None
-
-        def get_tuple(self, *args, **kwargs):
-            return None
-
-        def list(self, *args, **kwargs):
-            return []
+    from langgraph.checkpoint.memory import InMemorySaver
+    SqliteSaver = InMemorySaver
+    _USING_SQLITE = False
 
 
 from tradingagents.dataflows.utils import safe_ticker_component
@@ -61,7 +42,14 @@ def thread_id(ticker: str, date: str) -> str:
 
 @contextmanager
 def get_checkpointer(data_dir: str | Path, ticker: str) -> Generator[SqliteSaver, None, None]:
-    """Context manager yielding a SqliteSaver backed by a per-ticker DB."""
+    """Context manager yielding a checkpointer backed by a per-ticker DB.
+
+    当使用 InMemorySaver 兜底时，不创建 SQLite 连接，直接 yield 内存实例。
+    """
+    if not _USING_SQLITE:
+        yield SqliteSaver()
+        return
+
     db = _db_path(data_dir, ticker)
     conn = sqlite3.connect(str(db), check_same_thread=False)
     try:
