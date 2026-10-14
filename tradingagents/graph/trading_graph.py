@@ -7,7 +7,16 @@ import json
 from datetime import datetime, timedelta
 from typing import Dict, Any, Tuple, List, Optional
 
-import yfinance as yf
+# yfinance 采用延迟导入，避免模块加载时因云端环境缺包而报错
+_yf_module = None
+
+def _get_yf():
+    """懒加载 yfinance。首次调用时才会真正 import。"""
+    global _yf_module
+    if _yf_module is None:
+        import yfinance as _yf
+        _yf_module = _yf
+    return _yf_module
 
 logger = logging.getLogger(__name__)
 
@@ -622,8 +631,8 @@ class TradingAgentsGraph:
                 )
                 return None, None, None
 
-            stock = yf.Ticker(yf_symbol).history(start=trade_date, end=end_str)
-            benchmark = yf.Ticker("000300.SS").history(start=trade_date, end=end_str)
+            stock = _get_yf().Ticker(yf_symbol).history(start=trade_date, end=end_str)
+            benchmark = _get_yf().Ticker("000300.SS").history(start=trade_date, end=end_str)
 
             if len(stock) < 2 or len(benchmark) < 2:
                 return None, None, None
