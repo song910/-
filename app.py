@@ -1,5 +1,11 @@
-﻿import subprocess
+﻿
+"""TradingAgents A股分析 — Streamlit Web UI."""
+
+from __future__ import annotations
+
+import os
 import sys
+
 
 # 强制安装可能缺失的包
 for pkg in ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]:
@@ -7,12 +13,7 @@ for pkg in ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]:
         __import__(pkg.replace("-", "_"))
     except ImportError:
         subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
-"""TradingAgents A股分析 — Streamlit Web UI."""
-
-from __future__ import annotations
-
 import os
-import sys
 import time
 from pathlib import Path
 
