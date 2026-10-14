@@ -15,7 +15,12 @@ def _get_yf():
         import yfinance as _yf
         yf = _yf
     return yf
-from yfinance.exceptions import YFRateLimitError
+try:
+    from yfinance.exceptions import YFRateLimitError
+except ImportError:
+    class YFRateLimitError(Exception):
+        """yfinance 未安装时的占位异常类。"""
+        pass
 from stockstats import wrap
 from typing import Annotated
 import os
