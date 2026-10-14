@@ -11,14 +11,43 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator
 
-from langgraph.checkpoint.sqlite import SqliteSaver
+# ── langgraph-checkpoint-sqlite 兜底：缺包时用占位类，避免模块加载即崩 ──
+try:
+    from langgraph.checkpoint.sqlite import SqliteSaver
+except ImportError:
+    class SqliteSaver:
+        """langgraph-checkpoint-sqlite 未安装时的占位类。
+
+        仅提供与真实 SqliteSaver 相同签名的方法名，保证代码不会 AttributeError。
+        """
+        def __init__(self, *args, **kwargs):
+            pass
+
+        @classmethod
+        def from_conn_string(cls, *args, **kwargs):
+            return cls()
+
+        def setup(self, *args, **kwargs):
+            return None
+
+        def put(self, *args, **kwargs):
+            return None
+
+        def get(self, *args, **kwargs):
+            return None
+
+        def get_tuple(self, *args, **kwargs):
+            return None
+
+        def list(self, *args, **kwargs):
+            return []
+
 
 from tradingagents.dataflows.utils import safe_ticker_component
 
 
 def _db_path(data_dir: str | Path, ticker: str) -> Path:
     """Return the SQLite checkpoint DB path for a ticker."""
-    # Reject ticker values that would escape the checkpoints directory.
     safe = safe_ticker_component(ticker).upper()
     p = Path(data_dir) / "checkpoints"
     p.mkdir(parents=True, exist_ok=True)
@@ -88,4 +117,3 @@ def clear_checkpoint(data_dir: str | Path, ticker: str, date: str) -> None:
         pass
     finally:
         conn.close()
-
