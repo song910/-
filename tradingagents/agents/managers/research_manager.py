@@ -1,4 +1,4 @@
-"""Research Manager: turns the bull/bear debate into a structured investment plan for the trader."""
+﻿"""Research Manager: turns the bull/bear debate into a structured investment plan for the trader."""
 
 from __future__ import annotations
 
@@ -64,3 +64,4 @@ Commit to a clear stance whenever the debate's strongest arguments warrant one; 
         }
 
     return research_manager_node
+

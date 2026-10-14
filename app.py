@@ -1,4 +1,4 @@
-"""TradingAgents A股分析 — Streamlit Web UI."""
+﻿"""TradingAgents A股分析 — Streamlit Web UI."""
 
 from __future__ import annotations
 
@@ -20,12 +20,12 @@ load_dotenv(_PROJECT_ROOT / ".env", override=True)
 
 from tradingagents.default_config import DEFAULT_CONFIG  # noqa: E402
 
-from web.components.progress_panel import render_progress  # noqa: E402
-from web.components.report_viewer import render_report  # noqa: E402
-from web.components.sidebar import render_sidebar, validate_model_selection  # noqa: E402
-from web.history import clear_incomplete_task, extract_signal, load_analysis  # noqa: E402
-from web.progress import ProgressTracker  # noqa: E402
-from web.runner import run_analysis_in_thread  # noqa: E402
+from components.progress_panel import render_progress  # noqa: E402
+from components.report_viewer import render_report  # noqa: E402
+from components.sidebar import render_sidebar, validate_model_selection  # noqa: E402
+from history import clear_incomplete_task, extract_signal, load_analysis  # noqa: E402
+from progress import ProgressTracker  # noqa: E402
+from runner import run_analysis_in_thread  # noqa: E402
 
 # ── Page config ──────────────────────────────────────────────────────────────
 
@@ -334,3 +334,4 @@ else:
         """,
         unsafe_allow_html=True,
     )
+

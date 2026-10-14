@@ -1,4 +1,4 @@
-"""yfinance-based news data fetching functions."""
+﻿"""yfinance-based news data fetching functions."""
 
 import yfinance as yf
 from datetime import datetime
@@ -195,3 +195,4 @@ def get_global_news_yfinance(
 
     except Exception as e:
         return f"Error fetching global news: {str(e)}"
+

@@ -1,4 +1,4 @@
-
+﻿
 
 from tradingagents.agents.utils.context import compact_history
 
@@ -65,3 +65,4 @@ Deliver a compelling bull argument that integrates A-share market dynamics. Refu
         return {"investment_debate_state": new_investment_debate_state}
 
     return bull_node
+

@@ -1,4 +1,4 @@
-"""Declarative capabilities for OpenAI-compatible model adapters.
+﻿"""Declarative capabilities for OpenAI-compatible model adapters.
 
 Different OpenAI-compatible providers do not expose an identical API.  In
 particular, some reasoning models accept a ``tools`` array but reject the
@@ -112,3 +112,4 @@ def get_capabilities(model_name: str) -> ModelCapabilities:
         if pattern.match(model_name):
             return capabilities
     return _DEFAULT
+

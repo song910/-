@@ -1,4 +1,4 @@
-"""Launch the TradingAgents web UI via `tradingagents-web` command."""
+﻿"""Launch the TradingAgents web UI via `tradingagents-web` command."""
 
 from __future__ import annotations
 
@@ -14,3 +14,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

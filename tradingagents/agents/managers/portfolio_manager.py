@@ -1,4 +1,4 @@
-"""Portfolio Manager: synthesises the risk-analyst debate into the final decision.
+﻿"""Portfolio Manager: synthesises the risk-analyst debate into the final decision.
 
 Uses LangChain's ``with_structured_output`` so the LLM produces a typed
 ``PortfolioDecision`` directly, in a single call.  The result is rendered
@@ -118,3 +118,4 @@ Be decisive and ground every conclusion in specific evidence from the analysts.{
         }
 
     return portfolio_manager_node
+

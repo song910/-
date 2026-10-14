@@ -1,4 +1,4 @@
-import os
+﻿import os
 from typing import Any, Optional
 
 from langchain_openai import AzureChatOpenAI
@@ -52,3 +52,4 @@ class AzureOpenAIClient(BaseLLMClient):
     def validate_model(self) -> bool:
         """Azure accepts any deployed model name."""
         return True
+

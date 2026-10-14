@@ -1,4 +1,4 @@
-"""Manage completed and incomplete analysis history."""
+﻿"""Manage completed and incomplete analysis history."""
 
 from __future__ import annotations
 
@@ -248,3 +248,4 @@ def extract_signal(state: dict[str, Any]) -> str:
         if rating:
             return rating
     return "N/A"
+

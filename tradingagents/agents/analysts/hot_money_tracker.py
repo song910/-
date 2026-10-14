@@ -1,4 +1,4 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+﻿from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
     build_instrument_context,
     get_concept_blocks,
@@ -106,3 +106,4 @@ def create_hot_money_tracker(llm):
         }
 
     return hot_money_tracker_node
+

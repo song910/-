@@ -1,4 +1,4 @@
-# TradingAgents/graph/trading_graph.py
+﻿# TradingAgents/graph/trading_graph.py
 
 import logging
 import os
@@ -856,3 +856,4 @@ class TradingAgentsGraph:
     def process_signal(self, full_signal):
         """Process a signal to extract the core decision."""
         return self.signal_processor.process_signal(full_signal)
+

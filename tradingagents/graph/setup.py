@@ -1,4 +1,4 @@
-# TradingAgents/graph/setup.py
+﻿# TradingAgents/graph/setup.py
 
 from typing import Any, Dict
 from langgraph.graph import END, START, StateGraph
@@ -223,3 +223,4 @@ class GraphSetup:
         workflow.add_edge("Portfolio Manager", END)
 
         return workflow
+

@@ -1,4 +1,4 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+﻿from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
     build_instrument_context,
     get_fundamentals,
@@ -90,3 +90,4 @@ def create_lockup_watcher(llm):
         }
 
     return lockup_watcher_node
+

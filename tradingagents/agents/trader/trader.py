@@ -1,4 +1,4 @@
-"""Trader: turns the Research Manager's investment plan into a concrete transaction proposal."""
+﻿"""Trader: turns the Research Manager's investment plan into a concrete transaction proposal."""
 
 from __future__ import annotations
 
@@ -98,3 +98,4 @@ def create_trader(llm):
         }
 
     return functools.partial(trader_node, name="Trader")
+

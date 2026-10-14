@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import os
 import time
 from typing import Any, Optional
@@ -374,3 +374,4 @@ class OpenAIClient(BaseLLMClient):
     def validate_model(self) -> bool:
         """Validate model for the provider."""
         return validate_model(self.provider, self.model)
+

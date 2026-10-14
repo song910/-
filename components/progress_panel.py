@@ -1,10 +1,10 @@
-"""Real-time progress display for the analysis pipeline."""
+﻿"""Real-time progress display for the analysis pipeline."""
 
 from __future__ import annotations
 
 import streamlit as st
 
-from web.progress import PIPELINE_STAGES, ProgressTracker
+from progress import PIPELINE_STAGES, ProgressTracker
 
 
 def _status_badge(status: str) -> str:
@@ -119,3 +119,4 @@ def render_progress(tracker: ProgressTracker) -> None:
             is_latest = (name == completed_reports[-1][0])
             with st.expander(f"{icon} {name}", expanded=is_latest):
                 st.markdown(report[:3000])
+

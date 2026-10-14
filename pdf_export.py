@@ -1,4 +1,4 @@
-"""Generate PDF reports from analysis results using fpdf2."""
+﻿"""Generate PDF reports from analysis results using fpdf2."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ except ImportError as exc:
     WrapMode = None
     _FPDF_IMPORT_ERROR = exc
 
-from web.stock_display import normalize_stock_mentions, stock_display_label
+from stock_display import normalize_stock_mentions, stock_display_label
 
 
 _FPDF_VERSION = getattr(_fpdf_mod, "__version__", None) or getattr(_fpdf_mod, "FPDF_VERSION", "0")
@@ -700,3 +700,4 @@ def generate_markdown(final_state: dict[str, Any], ticker: str, trade_date: str,
         out.append("")
 
     return "\n".join(out)
+

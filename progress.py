@@ -1,4 +1,4 @@
-"""Thread-safe progress tracker shared between the background runner and Streamlit UI."""
+﻿"""Thread-safe progress tracker shared between the background runner and Streamlit UI."""
 
 from __future__ import annotations
 
@@ -180,3 +180,4 @@ class ProgressTracker:
             if stage_id == self.current_stage:
                 return "active"
             return "pending"
+

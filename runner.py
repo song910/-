@@ -1,4 +1,4 @@
-"""Background thread runner for TradingAgentsGraph pipeline."""
+﻿"""Background thread runner for TradingAgentsGraph pipeline."""
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ import threading
 import traceback
 from typing import Any
 
-from web.history import clear_incomplete_task, record_incomplete_task
-from web.progress import PIPELINE_STAGES, ProgressTracker
-from web.stock_display import normalize_report_state_mentions, normalize_stock_mentions
+from history import clear_incomplete_task, record_incomplete_task
+from progress import PIPELINE_STAGES, ProgressTracker
+from stock_display import normalize_report_state_mentions, normalize_stock_mentions
 
 
 _REPORT_KEY_TO_STAGE = {s["report_key"]: s["id"] for s in PIPELINE_STAGES}
@@ -80,7 +80,7 @@ def _detect_completed_stages(
 
 def _infer_active_stage(tracker: ProgressTracker) -> None:
     """Set the current_stage to the first non-completed stage."""
-    from web.progress import STAGE_IDS
+    from progress import STAGE_IDS
     for sid in STAGE_IDS:
         if tracker.stage_status(sid) == "pending":
             tracker.mark_stage_active(sid)
@@ -207,3 +207,4 @@ def run_analysis_in_thread(
     t = threading.Thread(target=_target, daemon=True)
     t.start()
     return t
+

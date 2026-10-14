@@ -1,4 +1,4 @@
-"""Shared 5-tier rating vocabulary and a deterministic heuristic parser.
+﻿"""Shared 5-tier rating vocabulary and a deterministic heuristic parser.
 
 The same five-tier scale (Buy, Overweight, Hold, Underweight, Sell) is used by:
 - The Research Manager (investment plan recommendation)
@@ -127,3 +127,4 @@ def parse_rating(text: str, default: str = "Hold") -> str:
         return _CN_RATING_MAP[m.group(0)]
 
     return default
+

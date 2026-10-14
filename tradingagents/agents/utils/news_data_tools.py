@@ -1,4 +1,4 @@
-from langchain_core.tools import tool
+﻿from langchain_core.tools import tool
 from typing import Annotated
 import re
 from tradingagents.dataflows.interface import route_to_vendor
@@ -77,3 +77,4 @@ def get_insider_transactions(
     if not ok:
         return code_or_message
     return route_to_vendor("get_insider_transactions", code_or_message)
+

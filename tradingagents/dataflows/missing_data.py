@@ -1,4 +1,4 @@
-"""Track data tool calls that returned missing or failed data.
+﻿"""Track data tool calls that returned missing or failed data.
 
 The analysis graph can continue even when a vendor endpoint returns an error or
 partial result.  This module keeps those gaps visible after the LLM report is
@@ -672,3 +672,4 @@ def retry_missing_tasks(
         "remaining_count": len(remaining),
         "resolved_count": len(resolved),
     }
+

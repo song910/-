@@ -1,4 +1,4 @@
-"""辩论历史滚动窗口压缩。
+﻿"""辩论历史滚动窗口压缩。
 
 多空 / 风险辩手每轮把完整 `history` 注入 prompt，同时再单独注入一次
 `current_response`（恰是 history 的最后一条发言），导致最新发言被重复注入、
@@ -70,3 +70,4 @@ def _first_sentence(turn: str) -> str:
     if len(body) > _SUMMARY_MAX_CHARS:
         return body[:_SUMMARY_MAX_CHARS] + "…"
     return body
+

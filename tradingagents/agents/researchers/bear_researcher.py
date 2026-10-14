@@ -1,4 +1,4 @@
-
+﻿
 
 from tradingagents.agents.utils.context import compact_history
 
@@ -66,3 +66,4 @@ Deliver a compelling bear argument grounded in A-share market realities. Refute 
         return {"investment_debate_state": new_investment_debate_state}
 
     return bear_node
+

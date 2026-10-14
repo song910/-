@@ -1,4 +1,4 @@
-"""Append-only markdown decision log for TradingAgents."""
+﻿"""Append-only markdown decision log for TradingAgents."""
 
 from typing import List, Optional
 from pathlib import Path
@@ -298,3 +298,4 @@ class TradingMemoryLog:
         text = e["decision"][:300]
         suffix = "..." if len(e["decision"]) > 300 else ""
         return f"{tag}\n{text}{suffix}"
+

@@ -1,4 +1,4 @@
-import os
+﻿import os
 import re
 import json
 import logging
@@ -78,3 +78,4 @@ def get_next_weekday(date):
         return next_weekday
     else:
         return date
+

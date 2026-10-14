@@ -1,4 +1,4 @@
-
+﻿
 
 from tradingagents.agents.utils.context import compact_history
 
@@ -70,3 +70,4 @@ Demonstrate why a conservative stance is the safest path, especially given A-sha
         return {"risk_debate_state": new_risk_debate_state}
 
     return conservative_node
+

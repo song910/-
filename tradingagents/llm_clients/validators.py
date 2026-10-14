@@ -1,4 +1,4 @@
-"""Model name validators for each provider."""
+﻿"""Model name validators for each provider."""
 
 from .model_catalog import get_known_models
 
@@ -28,3 +28,4 @@ def validate_model(provider: str, model: str) -> bool:
         return True
 
     return model in VALID_MODELS[provider_lower]
+

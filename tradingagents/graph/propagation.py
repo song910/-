@@ -1,4 +1,4 @@
-# TradingAgents/graph/propagation.py
+﻿# TradingAgents/graph/propagation.py
 
 from typing import Dict, Any, List, Optional
 from tradingagents.agents.utils.agent_states import (
@@ -71,3 +71,4 @@ class Propagator:
             "stream_mode": "values",
             "config": config,
         }
+

@@ -1,4 +1,4 @@
-"""Sidebar: stock input, LLM config, and history list."""
+﻿"""Sidebar: stock input, LLM config, and history list."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import streamlit as st
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.graph.checkpointer import clear_checkpoint
 from tradingagents.llm_clients.model_catalog import MODEL_OPTIONS
-from web.history import (
+from history import (
     clear_incomplete_task,
     get_history,
     get_incomplete_history,
@@ -492,3 +492,4 @@ def render_sidebar() -> None:
 
     st.markdown("---")
     st.caption("⚠️ 仅供学习研究，不构成投资建议")
+

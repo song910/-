@@ -1,4 +1,4 @@
-from typing import Annotated
+﻿from typing import Annotated
 
 REPORT_FIELDS = {
     "market": "market_report",
@@ -166,3 +166,4 @@ def create_quality_gate(llm):
         return {"data_quality_summary": summary}
 
     return quality_gate_node
+

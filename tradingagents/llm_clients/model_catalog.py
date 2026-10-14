@@ -1,4 +1,4 @@
-"""Shared model catalog for CLI selections and validation."""
+﻿"""Shared model catalog for CLI selections and validation."""
 
 from __future__ import annotations
 
@@ -151,3 +151,4 @@ def get_known_models() -> Dict[str, List[str]]:
         )
         for provider, mode_options in MODEL_OPTIONS.items()
     }
+

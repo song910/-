@@ -1,4 +1,4 @@
-"""Render the completed analysis report with expandable sections and PDF download."""
+﻿"""Render the completed analysis report with expandable sections and PDF download."""
 
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ from tradingagents.dataflows.missing_data import (
     get_missing_tasks,
     retry_missing_tasks,
 )
-from web.pdf_export import generate_markdown, generate_pdf
-from web.stock_display import normalize_stock_mentions, stock_display_label
+from pdf_export import generate_markdown, generate_pdf
+from stock_display import normalize_stock_mentions, stock_display_label
 
 
 def _strip_think(text: str) -> str:
@@ -315,3 +315,4 @@ def render_report(
     if dqs:
         with st.expander("✅ 数据质量", expanded=False):
             st.markdown(_display_report_text(dqs, ticker, final_state))
+

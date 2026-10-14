@@ -1,4 +1,4 @@
-
+﻿
 
 from tradingagents.agents.utils.context import compact_history
 
@@ -68,3 +68,4 @@ Advocate for a balanced, position-sized approach that captures A-share upside wh
         return {"risk_debate_state": new_risk_debate_state}
 
     return neutral_node
+

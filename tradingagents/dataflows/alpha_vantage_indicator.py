@@ -1,4 +1,4 @@
-from .alpha_vantage_common import _make_api_request
+﻿from .alpha_vantage_common import _make_api_request
 
 def get_indicator(
     symbol: str,
@@ -220,3 +220,4 @@ def get_indicator(
     except Exception as e:
         print(f"Error getting Alpha Vantage indicator data for {indicator}: {e}")
         return f"Error retrieving {indicator} data: {str(e)}"
+

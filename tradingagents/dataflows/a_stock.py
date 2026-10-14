@@ -1,4 +1,4 @@
-"""A-stock (China mainland) data vendor for TradingAgents.
+﻿"""A-stock (China mainland) data vendor for TradingAgents.
 
 Zero third-party data dependency (no akshare). All sources are direct HTTP APIs
 or mootdx TCP.
@@ -2590,3 +2590,4 @@ def get_industry_comparison(
         lines.append(f"行业对比查询失败: {e}")
 
     return "\n".join(lines)
+

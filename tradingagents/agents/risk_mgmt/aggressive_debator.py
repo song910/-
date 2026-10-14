@@ -1,4 +1,4 @@
-
+﻿
 
 from tradingagents.agents.utils.context import compact_history
 
@@ -67,3 +67,4 @@ Engage actively, debate persuasively, and assert why aggressive positioning is o
         return {"risk_debate_state": new_risk_debate_state}
 
     return aggressive_node
+

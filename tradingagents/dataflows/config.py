@@ -1,4 +1,4 @@
-import tradingagents.default_config as default_config
+﻿import tradingagents.default_config as default_config
 from typing import Dict, Optional
 
 # Use default config but allow it to be overridden
@@ -29,3 +29,4 @@ def get_config() -> Dict:
 
 # Initialize with default config
 initialize_config()
+

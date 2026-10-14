@@ -1,4 +1,4 @@
-"""LangGraph checkpoint support for resumable analysis runs.
+﻿"""LangGraph checkpoint support for resumable analysis runs.
 
 Per-ticker SQLite databases so concurrent tickers don't contend.
 """
@@ -88,3 +88,4 @@ def clear_checkpoint(data_dir: str | Path, ticker: str, date: str) -> None:
         pass
     finally:
         conn.close()
+

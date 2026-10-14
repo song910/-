@@ -1,4 +1,4 @@
-"""Extract the 5-tier portfolio rating from the Portfolio Manager's decision.
+﻿"""Extract the 5-tier portfolio rating from the Portfolio Manager's decision.
 
 The Portfolio Manager produces a typed ``PortfolioDecision`` via structured
 output and renders it to markdown that always carries a ``**Rating**: X``
@@ -29,3 +29,4 @@ class SignalProcessor:
     def process_signal(self, full_signal: str) -> str:
         """Return one of Buy / Overweight / Hold / Underweight / Sell."""
         return parse_rating(full_signal)
+

@@ -1,4 +1,4 @@
-# TradingAgents/graph/reflection.py
+﻿# TradingAgents/graph/reflection.py
 
 from typing import Any
 
@@ -51,3 +51,4 @@ class Reflector:
             ),
         ]
         return self.quick_thinking_llm.invoke(messages).content
+

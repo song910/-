@@ -1,4 +1,4 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+﻿from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
     build_instrument_context,
     get_fund_flow,
@@ -94,3 +94,4 @@ def create_social_media_analyst(llm):
         }
 
     return social_media_analyst_node
+

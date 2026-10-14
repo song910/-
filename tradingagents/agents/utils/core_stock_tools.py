@@ -1,4 +1,4 @@
-from langchain_core.tools import tool
+﻿from langchain_core.tools import tool
 from typing import Annotated
 from tradingagents.dataflows.interface import route_to_vendor
 
@@ -20,3 +20,4 @@ def get_stock_data(
         str: A formatted dataframe containing the stock price data for the specified stock code in the specified date range.
     """
     return route_to_vendor("get_stock_data", symbol, start_date, end_date)
+

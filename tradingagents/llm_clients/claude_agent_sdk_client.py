@@ -1,4 +1,4 @@
-"""Claude Agent SDK provider — route deep-thinking nodes through a personal
+﻿"""Claude Agent SDK provider — route deep-thinking nodes through a personal
 Claude Pro/Max subscription instead of the pay-per-token Anthropic API.
 
 Personal use only. The Claude Agent SDK / ``claude -p`` consume the logged-in
@@ -706,3 +706,4 @@ class ClaudeAgentSDKClient(BaseLLMClient):
         text, structured = self._run_query(user_text, options, self._timeout_for(1))
         data = structured if structured is not None else json.loads(_extract_json(text))
         return schema.model_validate(data)
+

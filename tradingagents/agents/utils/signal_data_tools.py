@@ -1,4 +1,4 @@
-from langchain_core.tools import tool
+﻿from langchain_core.tools import tool
 from typing import Annotated
 from tradingagents.dataflows.interface import route_to_vendor
 
@@ -161,3 +161,4 @@ def get_industry_comparison(
         str: Industry performance ranking with key metrics
     """
     return route_to_vendor("get_industry_comparison", ticker, curr_date)
+

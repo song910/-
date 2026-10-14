@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import os
 from typing import Any, Optional
 
@@ -90,3 +90,4 @@ class AnthropicClient(BaseLLMClient):
     def validate_model(self) -> bool:
         """Validate model for Anthropic."""
         return validate_model("anthropic", self.model)
+

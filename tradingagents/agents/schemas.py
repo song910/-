@@ -1,4 +1,4 @@
-"""Pydantic schemas used by agents that produce structured output.
+﻿"""Pydantic schemas used by agents that produce structured output.
 
 The framework's primary artifact is still prose: each agent's natural-language
 reasoning is what users read in the saved markdown reports and what the
@@ -209,3 +209,4 @@ def render_pm_decision(decision: PortfolioDecision) -> str:
     if decision.time_horizon:
         parts.extend(["", f"**Time Horizon**: {decision.time_horizon}"])
     return "\n".join(parts)
+

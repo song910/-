@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+﻿from abc import ABC, abstractmethod
 from typing import Any, Optional
 import logging
 import warnings
@@ -111,3 +111,4 @@ class BaseLLMClient(ABC):
     def validate_model(self) -> bool:
         """Validate that the model is supported by this client."""
         pass
+

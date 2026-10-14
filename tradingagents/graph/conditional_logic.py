@@ -1,4 +1,4 @@
-# TradingAgents/graph/conditional_logic.py
+﻿# TradingAgents/graph/conditional_logic.py
 
 from tradingagents.agents.utils.agent_states import AgentState
 
@@ -89,3 +89,4 @@ class ConditionalLogic:
         if state["risk_debate_state"]["latest_speaker"].startswith("Conservative"):
             return "Neutral Analyst"
         return "Aggressive Analyst"
+

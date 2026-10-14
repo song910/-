@@ -1,4 +1,4 @@
-"""Helpers for displaying A-share stock identifiers in the web UI."""
+﻿"""Helpers for displaying A-share stock identifiers in the web UI."""
 
 from __future__ import annotations
 
@@ -263,3 +263,4 @@ def normalize_report_state_mentions(final_state: dict[str, Any], ticker: str) ->
             final_state[key] = _normalize_report_value(final_state[key], ticker, final_state)
 
     return final_state
+

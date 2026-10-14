@@ -1,4 +1,4 @@
-"""决策绩效统计 —— 这套 agent 到底准不准（#61）。
+﻿"""决策绩效统计 —— 这套 agent 到底准不准（#61）。
 
 决策和真实收益其实一直都在存：`TradingMemoryLog` 每次分析落一条
 `[日期 | 代码 | 评级 | pending]`，下次跑同一只票时 `_resolve_pending_entries()`
@@ -332,3 +332,4 @@ def format_report(summary: Dict[str, Any]) -> str:
         "选择偏差。它只用来观察这套分析流程自身的一致性，不构成任何投资建议。",
     ]
     return "\n".join(lines)
+

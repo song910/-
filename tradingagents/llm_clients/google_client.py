@@ -1,4 +1,4 @@
-from typing import Any, Optional
+﻿from typing import Any, Optional
 
 try:
     from langchain_google_genai import ChatGoogleGenerativeAI
@@ -80,3 +80,4 @@ class GoogleClient(BaseLLMClient):
     def validate_model(self) -> bool:
         """Validate model for Google."""
         return validate_model("google", self.model)
+
