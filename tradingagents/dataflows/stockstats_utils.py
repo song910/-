@@ -2,11 +2,13 @@
 import logging
 
 import pandas as pd
-# yfinance 采用延迟导入，避免模块加载时因云端环境缺包而报错
+
+# ── yfinance 延迟导入，避免云端缺包时报错 ──
 try:
     import yfinance as yf
 except ImportError:
     yf = None
+
 
 def _get_yf():
     """懒加载 yfinance。首次调用时才会真正 import。"""
@@ -15,15 +17,29 @@ def _get_yf():
         import yfinance as _yf
         yf = _yf
     return yf
+
+
+# ── yfinance 异常类兜底 ──
 try:
     from yfinance.exceptions import YFRateLimitError
 except ImportError:
     class YFRateLimitError(Exception):
         """yfinance 未安装时的占位异常类。"""
         pass
-from stockstats import wrap
+
+
+# ── stockstats 兜底：缺包时返回原数据，不让程序崩溃 ──
+try:
+    from stockstats import wrap
+except ImportError:
+    def wrap(data):
+        """stockstats 未安装时的占位函数，返回原数据。"""
+        return data
+
+
 from typing import Annotated
 import os
+
 from .config import get_config
 from .utils import safe_ticker_component
 
@@ -43,7 +59,10 @@ def yf_retry(func, max_retries=3, base_delay=2.0):
         except YFRateLimitError:
             if attempt < max_retries:
                 delay = base_delay * (2 ** attempt)
-                logger.warning(f"Yahoo Finance rate limited, retrying in {delay:.0f}s (attempt {attempt + 1}/{max_retries})")
+                logger.warning(
+                    f"Yahoo Finance rate limited, retrying in {delay:.0f}s "
+                    f"(attempt {attempt + 1}/{max_retries})"
+                )
                 time.sleep(delay)
             else:
                 raise
@@ -69,8 +88,6 @@ def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
     subsequent calls the cache is reused. Rows after curr_date are
     filtered out so backtests never see future prices.
     """
-    # Reject ticker values that would escape the cache directory when
-    # interpolated into the cache filename (e.g. ``../../tmp/x``).
     safe_symbol = safe_ticker_component(symbol)
 
     config = get_config()
@@ -148,4 +165,3 @@ class StockstatsUtils:
             return indicator_value
         else:
             return "N/A: Not a trading day (weekend or holiday)"
-
