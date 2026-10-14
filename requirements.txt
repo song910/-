@@ -1,0 +1,15 @@
+streamlit
+akshare
+pandas
+numpy
+python-dotenv
+openai
+requests
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langgraph
+tiktoken
+chromadb
+beautifulsoup4
