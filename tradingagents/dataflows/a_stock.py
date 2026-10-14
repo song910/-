@@ -926,7 +926,12 @@ def get_indicators(
     look_back_days: Annotated[int, "how many days to look back"],
 ) -> str:
     """Get technical indicators using stockstats on mootdx OHLCV data."""
+    try:
     from stockstats import wrap
+except ImportError:
+    def wrap(data):
+        """stockstats 未安装时的占位函数，返回原数据。"""
+        return data
 
     code = _normalize_ticker(symbol)
 
