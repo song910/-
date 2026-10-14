@@ -1,26 +1,29 @@
-﻿
-"""TradingAgents A股分析 — Streamlit Web UI."""
+﻿"""TradingAgents A股分析 — Streamlit Web UI."""
 
 from __future__ import annotations
 
 import os
+import subprocess
 import sys
-
-
-# 强制安装可能缺失的包
-for pkg in ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]:
-    try:
-        __import__(pkg.replace("-", "_"))
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
-import os
 import time
 from pathlib import Path
+
+# 强制安装可能缺失的包（避免云端 requirements.txt 安装不全）
+_packages = ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]
+for _pkg in _packages:
+    try:
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", _pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except Exception:
+        pass
 
 import streamlit as st
 from dotenv import load_dotenv
 
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_PROJECT_ROOT = Path(__file__).resolve().parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
@@ -53,13 +56,6 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
-    /* Hide Streamlit chrome for clean video recording.
-       IMPORTANT: do NOT `display:none` the whole header OR the whole toolbar.
-       In Streamlit >= 1.36 the "expand sidebar" button lives *inside* the
-       toolbar (header > stToolbar > stExpandSidebarButton), so hiding either
-       one makes a collapsed sidebar impossible to reopen (issue #36). Instead
-       keep the header/toolbar in the DOM, make the header transparent, and
-       hide only the individual chrome widgets we don't want on camera. */
     #MainMenu,
     footer,
     div[data-testid="stDecoration"],
@@ -71,8 +67,6 @@ st.markdown(
         background: transparent !important;
         box-shadow: none !important;
     }
-    /* Keep the sidebar collapse / expand controls always visible & clickable.
-       Selector list spans multiple Streamlit versions. */
     button[data-testid="stExpandSidebarButton"],
     button[data-testid="stSidebarCollapseButton"],
     button[data-testid="collapsedControl"],
@@ -113,7 +107,6 @@ st.markdown(
         box-shadow: 0 6px 20px rgba(255,90,31,0.4) !important;
         transform: translateY(-1px) !important;
     }
-    /* Secondary buttons (history items) */
     button[kind="secondary"] {
         background: #161616 !important;
         border: 1px solid #2a2a2a !important;
@@ -141,7 +134,6 @@ st.markdown(
         border: 1px solid #ff5a1f !important;
         color: #ff5a1f !important;
     }
-    /* Text input styling */
     input[data-testid="stTextInputRootElement"] input,
     .stTextInput input {
         background: #161616 !important;
@@ -152,7 +144,6 @@ st.markdown(
         border-color: #ff5a1f !important;
         box-shadow: 0 0 0 1px #ff5a1f !important;
     }
-    /* Date input styling */
     .stDateInput input {
         background: #161616 !important;
         border-color: #2a2a2a !important;
@@ -171,7 +162,6 @@ def _build_config() -> dict:
     config["llm_provider"] = st.session_state.get("llm_provider", "minimax")
     config["deep_think_llm"] = st.session_state.get("deep_think_llm", "MiniMax-M2.7")
     config["quick_think_llm"] = st.session_state.get("quick_think_llm", "MiniMax-M2.7-highspeed")
-    # Optional third-party / proxy endpoint. Sidebar input wins, else .env BACKEND_URL.
     backend_url = (st.session_state.get("llm_base_url") or os.getenv("BACKEND_URL") or "").strip()
     config["backend_url"] = backend_url or None
     config["data_vendors"] = {
@@ -181,21 +171,12 @@ def _build_config() -> dict:
         "news_data": "a_stock",
         "signal_data": "a_stock",
     }
-    # Analysis window (#16): start-date input in the sidebar → look-back days.
     config["market_lookback_days"] = st.session_state.get("market_lookback_days")
     config["max_debate_rounds"] = 1
     config["max_risk_discuss_rounds"] = 1
     config["checkpoint_enabled"] = True
     config["output_language"] = "Chinese"
-    # Optional: route nodes through a personal Claude Pro/Max subscription (Agent
-    # SDK). Scope: "deep" = Research/Portfolio only; "all" = + the 7 analysts.
-    # Leaving the fallback keys None makes the graph fall back to the
-    # sidebar-selected llm_provider + models on quota/failure.
     scope = st.session_state.get("subscription_scope", "off")
-    # 侧栏那个输入框只配**深度节点**的模型。不要把它同时赋给 quick——
-    # quick 节点有 7 个分析师 + 多空/交易员/风险辩手，把深度节点的 opus 复制过去
-    # 会让订阅额度烧得极快，也与 README / 侧栏提示所说的「quick 默认 sonnet」矛盾。
-    # quick 的模型交给 DEFAULT_CONFIG（默认 sonnet），需要时在 config 层单独覆盖。
     sub_model = st.session_state.get("agent_sdk_model")
     if scope in ("deep", "all"):
         config["deep_think_provider_override"] = "claude_agent_sdk"
@@ -216,11 +197,6 @@ with st.sidebar:
 
 start_req = st.session_state.pop("start_analysis", None)
 if start_req:
-    # 唯一的消费点，所以模型校验挂在这里。`start_analysis` 有 4 个生产者——侧栏
-    # 「开始分析」、侧栏「未完成任务」续跑、报告页「重新分析」、错误页「继续未完成
-    # 任务」（历史记录只把它清空）——只在按钮里守一个，其余三条路径照样把空模型发给 API
-    # （实测踩到：深模型选「Custom model ID」且留空、走续跑路径，收到 `but you passed .`）。
-    # 校验的是 `_build_config()` 的产物，也就是真正要发出去的那份配置。
     config = _build_config()
     model_error = validate_model_selection(config)
     if model_error:
@@ -255,7 +231,6 @@ if start_req:
 tracker: ProgressTracker | None = st.session_state.get("tracker")
 viewing_history: str | None = st.session_state.get("viewing_history")
 
-# State 1: Viewing a historical analysis
 if viewing_history:
     try:
         state = load_analysis(viewing_history)
@@ -266,13 +241,11 @@ if viewing_history:
     except Exception as exc:
         st.error(f"加载失败: {exc}")
 
-# State 2: Analysis running
 elif tracker and tracker.is_running:
     render_progress(tracker)
     time.sleep(2)
     st.rerun()
 
-# State 3: Analysis complete
 elif tracker and tracker.is_complete:
     render_report(
         tracker.final_state,
@@ -282,7 +255,6 @@ elif tracker and tracker.is_complete:
         elapsed=tracker.elapsed,
     )
 
-# State 4: Analysis errored
 elif tracker and tracker.error:
     st.error(f"分析失败: {tracker.error}")
     st.caption("已完成阶段会保存在本地断点中；修复模型额度或配置后，可以继续未完成的部分。")
@@ -294,7 +266,6 @@ elif tracker and tracker.error:
         st.session_state["viewing_history"] = None
         st.rerun()
 
-# State 0: Idle — welcome screen
 else:
     st.markdown(
         """
@@ -344,4 +315,3 @@ else:
         """,
         unsafe_allow_html=True,
     )
-
