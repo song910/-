@@ -3,22 +3,13 @@
 from __future__ import annotations
 
 import os
-import subprocess
 import sys
 import time
 from pathlib import Path
 
-# 强制安装可能缺失的包（避免云端 requirements.txt 安装不全）
-_packages = ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]
-for _pkg in _packages:
-    try:
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", _pkg],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except Exception:
-        pass
+# ── 强制安装缺失的包（必须在其他 import 之前执行） ──
+for _pkg in ["yfinance", "stockstats", "langgraph-checkpoint-sqlite"]:
+    os.system(f"{sys.executable} -m pip install -q {_pkg}")
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -27,12 +18,10 @@ _PROJECT_ROOT = Path(__file__).resolve().parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-# override=True：让 .env 的值优先于进程里可能残留的空/旧环境变量（#66）。
-# 注意：load_dotenv 仅在进程启动时执行一次，启动后修改 .env 仍需重启 Web 服务才生效。
+# override=True：让 .env 的值优先于进程里可能残留的空/旧环境变量
 load_dotenv(_PROJECT_ROOT / ".env", override=True)
 
 from tradingagents.default_config import DEFAULT_CONFIG  # noqa: E402
-
 from components.progress_panel import render_progress  # noqa: E402
 from components.report_viewer import render_report  # noqa: E402
 from components.sidebar import render_sidebar, validate_model_selection  # noqa: E402
